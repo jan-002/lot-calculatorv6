@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;900&family=Roboto&family=Sacramento&display=swap" rel="stylesheet">
+    
+    <title>CalcForYou</title>
+    <style>
+        body{
+            font-family: 'Montserrat', sans-serif;
+            font-size: large;
+        }
+        h2{
+            margin-top: 0;
+            padding: 0px 10px;
+            color: rgb(125, 82, 34);
+        }
+        .in{
+
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            height: 25px;
+
+        }
+        .test{
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            background-color: aqua;
+        }
+        .flex-container {
+
+            overflow:auto;
+
+        }
+        .tables {
+            float: left;
+            margin-left: 100px;
+            margin-top: 20px;
+        }   
+        .main{
+            float: left;
+            padding-bottom: 30px;
+            border: 5px solid rgb(18, 103, 17);
+            margin-top: 10px;
+        }
+        #btn{
+            position: relative;
+            margin-left: 14%;
+            font-family: 'Montserrat', sans-serif;
+            font-size: large;
+            width: 70%;
+            padding: 5px 10px;
+            background-color: green;
+            border-color: green;
+            color: white;
+        }
+        #table1cell{
+            font-weight: bold;
+            background-color:rgb(206, 231, 186);
+        }
+        #table1rows{
+            font-weight:600;
+            background-color:rgb(206, 231, 186);
+        }
+        #cellcontent{
+            background-color:rgb(248, 250, 246);
+        }
+
+        #myTd1, #myTd{
+            text-align: center;
+            font-weight: bold;
+            color: antiquewhite;
+            background-color:darkgreen;
+        }
+        #hce2, #hpe2{
+            background-color: rgb(130, 233, 122);
+        }
+        #myTable{
+            position: relative;
+            margin-left: 10%;
+            border: 5px solid green ;
+            margin-right:10%;
+        }
+        @media only screen and (max-width: 620px) 
+        {
+
+            .main{
+                width: 100%;
+            }
+            .tables{
+                margin-left: 7%;
+            }
+            #myTablece, #myTablepe{
+                width: 100%;
+                margin-left: 0px;
+            }
+            
+
+        }
+    </style>
+    <script>
+        function computeQtyLot()
+        {
+           
+            var tablece = document.getElementById("myTablece");
+            var tablepe = document.getElementById("myTablepe");
+
+            tablece.innerHTML="";
+            tablepe.innerHTML="";
+
+            var type = document.getElementById("type").value;
+            var incr = parseInt(document.getElementById("inc").value);
+            var totamt = parseInt(document.getElementById("totamount").value);
+
+            var ce = parseInt(document.getElementById("ce").value);
+            var pe = parseInt(document.getElementById("pe").value);
+
+            var cenumqty = Math.floor(totamt/ce);
+            var penumqty = Math.floor(totamt/pe);
+            var cenum_lots = 0;
+            var penum_lots = 0;
+            document.getElementById("ceqty").innerHTML = cenumqty;
+            document.getElementById("peqty").innerHTML = penumqty;
+
+            var numlots = 0;
+            var i = 0;
+            var start = ce - 20; 
+            var next = start + incr; 
+
+            var headerce1 = tablece.insertRow(0);
+            var c = headerce1.insertCell(0);
+            c.innerHTML = "CE";
+            c.id = "myTd1";
+            document.getElementById("myTd1").colSpan = "3"
+            var headerce2 = tablece.insertRow(1);
+            headerce2.id = "hce2";
+            var c1 = headerce2.insertCell(0);
+            var c2 = headerce2.insertCell(1);
+            var c3 = headerce2.insertCell(2);
+            c1.innerHTML = "RANGE";
+            c2.innerHTML = "NUM_QTY";
+            c3.innerHTML = "NUM_LOTS";
+
+            var headerpe1 = tablepe.insertRow(0);
+            var c = headerpe1.insertCell(0);
+            c.innerHTML = "PE";
+            c.id = "myTd";
+            document.getElementById("myTd").colSpan = "3"
+            var headerpe2 = tablepe.insertRow(1);
+            headerpe2.id = "hpe2";
+            var c1 = headerpe2.insertCell(0);
+            var c2 = headerpe2.insertCell(1);
+            var c3 = headerpe2.insertCell(2);
+            c1.innerHTML = "RANGE";
+            c2.innerHTML = "NUM_QTY";
+            c3.innerHTML = "NUM_LOTS";
+            
+            if(type=="bn")
+            {
+                cenum_lots = Math.floor(cenumqty/25);
+                for(i=0;i<(20/incr)*2;i++)
+                {
+                    var st = start.toString() + " - " + next.toString();
+                    var mid = (start+next)/2;
+                    cenumqty = Math.floor(totamt/mid);
+                    numlots = Math.floor(cenumqty/25);
+                    
+                    var row = tablece.insertRow(i+2);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = st;
+                    cell2.innerHTML = cenumqty.toString();
+                    cell3.innerHTML = numlots.toString();
+
+                    start = next;
+                    next = next + incr;
+                }
+                
+                var start = pe - 20;
+                var next = start + incr;
+                penum_lots = Math.floor(penumqty/25);
+                for(i=0;i<(20/incr)*2;i++)
+                {
+                    var st = start.toString() + " - " + next.toString();
+                    var mid = (start+next)/2;
+                    penumqty = Math.floor(totamt/mid);
+                    numlots = Math.floor(penumqty/25);
+                    
+                    var row = tablepe.insertRow(i+2);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = st;
+                    cell2.innerHTML = penumqty.toString();
+                    cell3.innerHTML = numlots.toString();
+
+                    start = next;
+                    next = next + incr;
+                }
+            }
+            else
+            {
+                cenum_lots = Math.floor(cenumqty/40);
+                for(i=0;i<(20/incr)*2;i++)
+                {
+                    var st = start.toString() + " - " + next.toString();
+                    var mid = (start+next)/2;
+                    cenumqty = Math.floor(totamt/mid);
+                    numlots = Math.floor(cenumqty/40);
+                    
+                    var row = tablece.insertRow(i+2);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = st;
+                    cell2.innerHTML = cenumqty.toString();
+                    cell3.innerHTML = numlots.toString();
+
+                    start = next;
+                    next = next + incr;
+                }
+
+                var start = pe - 20;
+                var next = start + incr;
+                penum_lots = Math.floor(penumqty/40);
+                for(i=0;i<(20/incr)*2;i++)
+                {
+                    var st = start.toString() + " - " + next.toString();
+                    var mid = (start+next)/2;
+                    penumqty = Math.floor(totamt/mid);
+                    numlots = Math.floor(penumqty/40);
+                    
+                    var row = tablepe.insertRow(i+2);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = st;
+                    cell2.innerHTML = penumqty.toString();
+                    cell3.innerHTML = numlots.toString();
+
+                    start = next;
+                    next = next + incr;
+                }
+            }
+            document.getElementById("celots").innerHTML = cenum_lots;
+            document.getElementById("pelots").innerHTML = penum_lots;
+
+        }
+    </script>
+</head>
+<body>
+
+    <div class="flex-container">
+
+        <div style="background-color: beige; " class = "main">
+            <h2>LOT-QUANTITY CALCULATOR</h2>
+            <table border = '0'cellpadding = "20px" style = "float: left;">
+                <tr>
+                <td><label for = "type">Select Type: </label></td>
+                <td>
+                <select class = "in" name = "type" id="type">
+                <option value = "bn">Banknifty</option>  
+                <option value = "fn">Finnifty</option>  
+                </select> 
+                </td></tr>
+                <tr><td><label for="totamount">Total Amount: </label></td><td><input class = "in" type="text" name = "totamount" id = "totamount"></td></tr>
+                <tr><td><label for="ce">Enter CE: </label></td><td><input class = "in" type="text" name = "ce" id = "ce"></td></tr>
+                <tr><td><label for="pe">Enter PE: </label></td><td><input class = "in" type="text" name = "pe" id = "pe"></td></tr>  
+                <tr>
+                    <td><label for = "inc">Select Increment: </label></td>
+                    <td>
+                    <select class = "in" name = "inc" id="inc">
+                    <option value = "5">Increment by 5</option>  
+                    <option value = "10">Increment by 10</option>  
+                    </select> 
+                    </td></tr>
+            </table>
+            <br>
+    
+            <button id = "btn" onclick="computeQtyLot()">CALCULATE</button>  
+
+            <hr style = "width: 75%; margin-left: 12%; border-top: 7px dotted rgb(27, 120, 27);">
+            <table cellpadding = "10px" id = "myTable">
+                <tr>
+                    <td>
+                    </td>
+                    <td id = "table1cell">CE</td>
+                    <td id = "table1cell">PE</td>
+                </tr>
+                <tr>
+                    <td id = "table1rows"><p>Number of Quantities: </p></td>
+                    <td id = "cellcontent"><p id = "ceqty" ></p></td>
+                    <td id = "cellcontent"><p id = "peqty" ></p></td>
+                </tr>
+                <tr>
+                    <td id="table1rows"><p>Number of Lots: </p></td>
+                    <td id = "cellcontent"><p id = "celots"></p></td>
+                    <td id = "cellcontent"><p id = "pelots"></p></td>
+                </tr>
+            </table>
+        </div>
+
+            <div class = "tables ">
+                <table id = "myTablece" cellpadding = "10px" style = "border: 5px solid rgb(18, 103, 17) ">
+                    <caption><h3>CE</h3></caption>
+                    <tr>
+                    <th>RANGE</th>
+                    <th>NUM_QTY</th>
+                    <th>NUM_LOTS</th>
+                    </tr>
+                </table>
+                
+            </div>
+            <div class = "tables">
+                <table id = "myTablepe" cellpadding = "10px" style = "border: 5px solid rgb(18, 103, 17) ">
+                    <caption><h3>PE</h3></caption>
+                    <tr>
+                    <th>RANGE</th>
+                    <th>NUM_QTY</th>
+                    <th>NUM_LOTS</th>
+                    </tr>
+                </table>
+            </div>
+
+        
+    </div>
+
+
+
+    
+    
+    
+</body>
+</html>
